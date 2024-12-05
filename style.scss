@@ -1,0 +1,56 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+body {
+  height: 100vh;
+}
+.main-heading {
+  font-family: sans-serif;
+  text-align: center;
+}
+.game {
+  height: 60%;
+}
+.input {
+  height: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
+  &__row-1 {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: stretch;
+    // justify-content: space-between;
+  }
+  &__row-2 {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    // justify-content: space-between;
+  }
+  &__row-3 {
+    width: 70%;
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    // justify-content: space-between;
+  }
+}
+.keyboard__button {
+  font-family: 'Reddit Mono';
+  font-size: 2.5rem;
+  flex-basis: 250px;
+  //   margin: auto;
+  //   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  flex-basis: 100%;
+}
