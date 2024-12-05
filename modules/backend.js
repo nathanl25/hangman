@@ -1,35 +1,57 @@
 // import wordBank from '../assets/example-words.json';
-// import data from '../assets/example-words.json' with {type: 'json'};
+import data from '../assets/example-words.json' with {type: 'json'};
 // console.log(data);
-const wordBank = new Object();
-wordBank.words = [
-  'apple',
-  'banana',
-  'orange',
-  'grape',
-  'kiwi',
-  'pear',
-  'peach',
-  'plum',
-  'melon',
-  'lemon',
-  'pineapple',
-];
-wordBank.size = wordBank.length;
+export const wordBank = {};
+// wordBank.words = [
+//   'apple',
+//   'banana',
+//   'orange',
+//   'grape',
+//   'kiwi',
+//   'pear',
+//   'peach',
+//   'plum',
+//   'melon',
+//   'lemon',
+// ];
+wordBank.words = data;
+// console.log(wordBank.words);
+wordBank.size = wordBank.words.length;
+// console.log(wordBank.size);
 wordBank.currWord = -1;
-const prevWords = [''];
+// export { wordBank };
+export const prevWords = [''];
 
-const newGame = (wordBank) => {
+export const newGame = (wordBank) => {
   const randIndex = Math.floor(Math.random() * wordBank.size);
   wordBank.currWord = randIndex;
   const game = new Object();
-  game.word = wordBank[randIndex].split('');
+  //   console.log(randIndex);
+  game.word = wordBank.words[randIndex].split('');
   game.wordLength = game.word.length;
   game.lives = 10;
   game.correctLetters = new Array(game.wordLength);
   game.correctLetters.fill('_');
   game.usedLetters = [];
-  console.log(game);
+  //   console.log(game);
+  return game;
+};
+
+export const gameMove = (game, letter) => {
+  if (validInput(game, letter)) {
+    guessLetter(game, letter);
+  } else {
+    console.log('You already picked this move, dummy');
+  }
+  const gameSt = checkGameStatus(game);
+  if (gameSt === 'lose') {
+    console.log('You lose');
+  } else if (gameSt === 'win') {
+    console.log('You win');
+  } else {
+    console.log(`Word: ${game.correctLetters}`);
+    console.log(`Lives remaining: ${game.lives}`);
+  }
 };
 
 const validInput = (game, letter) => {
@@ -66,16 +88,16 @@ const guessLetter = (game, letter) => {
 const checkGameStatus = (game) => {
   if (game.lives === 0) {
     return 'lose';
-  } else if (game.correctLetters.includes('_')) {
+  } else if (!game.correctLetters.includes('_')) {
     return 'win';
   }
   return 'in progress';
 };
 
-const updateHistory = (wordBank, prevWords, word) => {
+export const updateHistory = (wordBank, prevWords, word) => {
   prevWords.push(word);
   wordBank.splice(wordBank.currWord, 1);
   wordBank.size--;
 };
 
-newGame(wordBank);
+// newGame(wordBank);
