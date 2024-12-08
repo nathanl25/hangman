@@ -1,5 +1,7 @@
 // import wordBank from '../assets/example-words.json';
-import data from '../assets/example-words.json' with {type: 'json'};
+// make js file instead
+import { data } from '../assets/example-words.js';
+import { updatePicture, updateButton } from './dom.js';
 // console.log(data);
 export const wordBank = {};
 // wordBank.words = [
@@ -29,7 +31,7 @@ export const newGame = (wordBank) => {
   //   console.log(randIndex);
   game.word = wordBank.words[randIndex].split('');
   game.wordLength = game.word.length;
-  game.lives = 10;
+  game.wrongGuesses = 0;
   game.correctLetters = new Array(game.wordLength);
   game.correctLetters.fill('_');
   game.usedLetters = [];
@@ -37,20 +39,24 @@ export const newGame = (wordBank) => {
   return game;
 };
 
-export const gameMove = (game, letter) => {
+export const gameMove = (game, button) => {
+  const letter = button.innerText.toLowerCase();
   if (validInput(game, letter)) {
-    guessLetter(game, letter);
+    guessLetter(game, button);
   } else {
     console.log('You already picked this move, dummy');
   }
   const gameSt = checkGameStatus(game);
   if (gameSt === 'lose') {
     console.log('You lose');
+    return 'l';
   } else if (gameSt === 'win') {
     console.log('You win');
+    return 'w';
   } else {
     console.log(`Word: ${game.correctLetters}`);
-    console.log(`Lives remaining: ${game.lives}`);
+    console.log(`Lives remaining: ${10 - game.wrongGuesses}`);
+    return 'c';
   }
 };
 
@@ -75,18 +81,22 @@ const updateUsedLetters = (game, letter) => {
   game.usedLetters.push(letter);
 };
 
-const guessLetter = (game, letter) => {
+const guessLetter = (game, button) => {
+  const letter = button.innerText.toLowerCase();
   if (game.word.includes(letter)) {
     updateCorrectLetters(game, letter);
+    updateButton(button, 'correct');
   } else {
-    game.lives--;
+    updateButton(button, 'incorrect');
+    updatePicture(game);
+    game.wrongGuesses++;
   }
   updateUsedLetters(game, letter);
   return game;
 };
 
 const checkGameStatus = (game) => {
-  if (game.lives === 0) {
+  if (game.wrongGuesses === 9) {
     return 'lose';
   } else if (!game.correctLetters.includes('_')) {
     return 'win';
