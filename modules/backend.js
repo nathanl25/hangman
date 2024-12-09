@@ -4,6 +4,10 @@ import { data } from '../assets/example-words.js';
 import { updatePicture, updateButton } from './dom.js';
 // console.log(data);
 export const wordBank = {};
+wordBank.words = data;
+wordBank.size = wordBank.words.length;
+wordBank.currWordIndex = -1;
+export const prevWords = [];
 // wordBank.words = [
 //   'apple',
 //   'banana',
@@ -16,17 +20,13 @@ export const wordBank = {};
 //   'melon',
 //   'lemon',
 // ];
-wordBank.words = data;
 // console.log(wordBank.words);
-wordBank.size = wordBank.words.length;
 // console.log(wordBank.size);
-wordBank.currWord = -1;
 // export { wordBank };
-export const prevWords = [''];
 
 export const newGame = (wordBank) => {
   const randIndex = Math.floor(Math.random() * wordBank.size);
-  wordBank.currWord = randIndex;
+  wordBank.currWordIndex = randIndex;
   const game = new Object();
   //   console.log(randIndex);
   game.word = wordBank.words[randIndex].split('');
@@ -39,32 +39,54 @@ export const newGame = (wordBank) => {
   return game;
 };
 
+export const resetGame = (wordBank, game) => {
+  const randIndex = Math.floor(Math.random() * wordBank.size);
+  wordBank.currWordIndex = randIndex;
+  // const game = new Object();
+  //   console.log(randIndex);
+  game.word = wordBank.words[randIndex].split('');
+  game.wordLength = game.word.length;
+  game.wrongGuesses = 0;
+  game.correctLetters = new Array(game.wordLength);
+  game.correctLetters.fill('_');
+  game.usedLetters = [];
+};
+
 export const gameMove = (game, button) => {
   const letter = button.innerText.toLowerCase();
   if (validInput(game, letter)) {
     guessLetter(game, button);
   } else {
-    console.log('You already picked this move, dummy');
+    return 0;
   }
   const gameSt = checkGameStatus(game);
+
   if (gameSt === 'lose') {
-    console.log('You lose');
-    return 'l';
+    // console.log('You lose');
+    return 'Better Luck Next Time.';
   } else if (gameSt === 'win') {
-    console.log('You win');
-    return 'w';
+    // console.log('You win');
+    return 'You Win!';
   } else {
-    console.log(`Word: ${game.correctLetters}`);
-    console.log(`Lives remaining: ${10 - game.wrongGuesses}`);
-    return 'c';
+    // console.log(`Word: ${game.correctLetters}`);
+    // console.log(`Lives remaining: ${10 - game.wrongGuesses}`);
+    return 0;
   }
 };
 
 const validInput = (game, letter) => {
-  if (letter.toUpperCase() === letter.toLowerCase()) {
-    return false;
-  } else if (game.usedLetters.includes(letter)) {
-    return false;
+  //   if (letter.toUpperCase() === letter.toLowerCase()) {
+  //     return false;
+  //   } else if (game.usedLetters.includes(letter)) {
+  //     return false;
+  //   }
+  //   console.log(letter);
+  switch (true) {
+    case game.wrongGuesses > 9:
+    case letter.toUpperCase() === letter.toLowerCase():
+    case game.usedLetters.includes(letter):
+    case !game.correctLetters.includes('_'):
+      return false;
   }
   return true;
 };
@@ -96,7 +118,7 @@ const guessLetter = (game, button) => {
 };
 
 const checkGameStatus = (game) => {
-  if (game.wrongGuesses === 9) {
+  if (game.wrongGuesses === 10) {
     return 'lose';
   } else if (!game.correctLetters.includes('_')) {
     return 'win';
@@ -104,9 +126,10 @@ const checkGameStatus = (game) => {
   return 'in progress';
 };
 
-export const updateHistory = (wordBank, prevWords, word) => {
-  prevWords.push(word);
-  wordBank.splice(wordBank.currWord, 1);
+export const updateHistory = (wordBank, prevWords) => {
+  const oldWord = wordBank.words[wordBank.currWordIndex];
+  prevWords.push(oldWord);
+  wordBank.words.splice(wordBank.currWordIndex, 1);
   wordBank.size--;
 };
 
