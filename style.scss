@@ -11,6 +11,126 @@ body {
 }
 .game {
   height: 60%;
+  display: flex;
+  //   align-items: center;
+  &__word {
+    width: 40%;
+    font-family: sans-serif;
+    font-size: 3rem;
+    // text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    // justify-self: center;
+    // align-self: center;
+  }
+  &__picture {
+    width: 60%;
+    display: flex;
+    justify-content: center;
+  }
+}
+.hangman {
+  display: flex;
+  &_wrapper {
+    width: 400px;
+    height: 400px;
+    border: 3px solid gray;
+    position: relative;
+    & > .invisible {
+      visibility: hidden;
+    }
+    & > .visible {
+      visibility: visible;
+    }
+  }
+  &_platform {
+    width: 275px;
+    border: 3px solid black;
+    position: absolute;
+    top: 397px;
+    left: 22px;
+  }
+  &_column {
+    height: 325px;
+    border: 3px solid black;
+    position: absolute;
+    top: 72px;
+    left: 97px;
+  }
+  &_beam {
+    position: absolute;
+    border: 3px solid black;
+    width: 125px;
+    top: 72px;
+    left: 97px;
+  }
+  &_rope {
+    position: absolute;
+    border: 3px solid black;
+    height: 50px;
+    top: 72px;
+    left: 222px;
+  }
+  &_head {
+    position: absolute;
+    border: 6px solid black;
+    top: 127px;
+    left: 204px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  &_torso {
+    position: absolute;
+    border: 3px solid black;
+    height: 120px;
+    left: 222px;
+    top: 165px;
+    &-visible {
+      visibility: visible;
+    }
+    &-invisible {
+      visibility: hidden;
+    }
+  }
+  &_arm {
+    &-left {
+      position: absolute;
+      border: 3px solid black;
+      width: 40px;
+      left: 185px;
+      top: 210px;
+      transform: rotate(45deg);
+    }
+    &-right {
+      position: absolute;
+      border: 3px solid black;
+      width: 40px;
+      left: 219px;
+      top: 210px;
+      transform: rotate(135deg);
+    }
+  }
+  &_leg {
+    &-left {
+      position: absolute;
+      border: 3px solid black;
+      width: 55px;
+      left: 172px;
+      top: 305px;
+      transform: rotate(135deg);
+    }
+    &-right {
+      position: absolute;
+      border: 3px solid black;
+      width: 55px;
+      left: 217px;
+      top: 305px;
+      transform: rotate(45deg);
+    }
+  }
 }
 .input {
   height: 30%;
@@ -19,6 +139,15 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
+  & .correct {
+    background-color: rgb(89, 181, 89);
+  }
+  & .incorrect {
+    background-color: rgb(218, 63, 63);
+  }
+  & .default {
+    background-color: rgb(166, 164, 164);
+  }
   &__row-1 {
     width: 100%;
     display: flex;

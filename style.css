@@ -14,6 +14,119 @@ body {
 
 .game {
   height: 60%;
+  display: flex;
+}
+.game__word {
+  width: 40%;
+  font-family: sans-serif;
+  font-size: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.game__picture {
+  width: 60%;
+  display: flex;
+  justify-content: center;
+}
+
+.hangman {
+  display: flex;
+}
+.hangman_wrapper {
+  width: 400px;
+  height: 400px;
+  border: 3px solid gray;
+  position: relative;
+}
+.hangman_wrapper > .invisible {
+  visibility: hidden;
+}
+.hangman_wrapper > .visible {
+  visibility: visible;
+}
+.hangman_platform {
+  width: 275px;
+  border: 3px solid black;
+  position: absolute;
+  top: 397px;
+  left: 22px;
+}
+.hangman_column {
+  height: 325px;
+  border: 3px solid black;
+  position: absolute;
+  top: 72px;
+  left: 97px;
+}
+.hangman_beam {
+  position: absolute;
+  border: 3px solid black;
+  width: 125px;
+  top: 72px;
+  left: 97px;
+}
+.hangman_rope {
+  position: absolute;
+  border: 3px solid black;
+  height: 50px;
+  top: 72px;
+  left: 222px;
+}
+.hangman_head {
+  position: absolute;
+  border: 6px solid black;
+  top: 127px;
+  left: 204px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+.hangman_torso {
+  position: absolute;
+  border: 3px solid black;
+  height: 120px;
+  left: 222px;
+  top: 165px;
+}
+.hangman_torso-visible {
+  visibility: visible;
+}
+.hangman_torso-invisible {
+  visibility: hidden;
+}
+.hangman_arm-left {
+  position: absolute;
+  border: 3px solid black;
+  width: 40px;
+  left: 185px;
+  top: 210px;
+  transform: rotate(45deg);
+}
+.hangman_arm-right {
+  position: absolute;
+  border: 3px solid black;
+  width: 40px;
+  left: 219px;
+  top: 210px;
+  transform: rotate(135deg);
+}
+.hangman_leg-left {
+  position: absolute;
+  border: 3px solid black;
+  width: 55px;
+  left: 172px;
+  top: 305px;
+  transform: rotate(135deg);
+}
+.hangman_leg-right {
+  position: absolute;
+  border: 3px solid black;
+  width: 55px;
+  left: 217px;
+  top: 305px;
+  transform: rotate(45deg);
 }
 
 .input {
@@ -23,6 +136,15 @@ body {
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
+}
+.input .correct {
+  background-color: rgb(89, 181, 89);
+}
+.input .incorrect {
+  background-color: rgb(218, 63, 63);
+}
+.input .default {
+  background-color: rgb(166, 164, 164);
 }
 .input__row-1 {
   width: 100%;

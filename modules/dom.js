@@ -28,3 +28,31 @@ Create a new object/renew values for existing object?
 
 
 */
+
+const hangmanDrawings = document.getElementById('hangmanWrapper');
+console.log(hangmanDrawings.children[0]);
+
+export const createEl = (parent, child, text, id) => {
+  const el = document.createElement(child);
+  const pText = document.createTextNode(text);
+  console.log(text);
+  el.appendChild(pText);
+  el.id = id;
+  parent.appendChild(el);
+};
+
+export const updateEl = (element, text) => {
+  element.textContent = text;
+};
+
+export const updatePicture = (game) => {
+  const progress = game.wrongGuesses;
+  console.log(hangmanDrawings.children[progress]);
+  hangmanDrawings.children[progress].classList.remove('invisible');
+  hangmanDrawings.children[progress].classList.add('visible');
+};
+
+export const updateButton = (button, guessType) => {
+  button.classList.remove('default');
+  button.classList.add(guessType);
+};
